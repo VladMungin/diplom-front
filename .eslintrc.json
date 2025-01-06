@@ -1,3 +1,175 @@
 {
-  "extends": ["next/core-web-vitals", "next/typescript"]
+  // Базовая конфигурация для файлов JavaScript
+  "parser": "@typescript-eslint/parser",
+  "extends": [
+    "eslint:recommended",
+    "airbnb-base", // Базовый стиль гида по коду JavaScript от Airbnb
+    "plugin:@typescript-eslint/eslint-recommended",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:react/recommended",
+    "next/core-web-vitals", // Плагин ядра веб-показателей Next.js для предотвращения предупреждений сборки
+    "plugin:prettier/recommended" // Интеграция Prettier с ESLint
+  ],
+  "plugins": ["react", "@typescript-eslint"],
+  "parserOptions": {
+    "ecmaFeatures": {
+      "jsx": true
+    },
+    "ecmaVersion": 2018,
+    "sourceType": "module"
+  },
+  "rules": {
+    "prettier/prettier": [
+      "error",
+      {
+        "tabWidth": 2, // Задать ширину табуляции в два пробела
+        "bracketSpacing": true, // Включить пробелы между квадратными скобками и фигурными скобками
+        "singleQuote": true, // Использовать одинарные кавычки вместо двойных
+        "endOfLine": "auto", // Поддерживать однородное поведение конца строки в различных средах
+        "semi": false // Пропустить точки с запятой в конце выражений
+      }
+    ] // Предотвратить конфликты между правилами Prettier и Airbnb ESLint
+  },
+  "settings": {
+    "tailwindcss": {
+      "callees": ["classnames", "clsx", "ctl", "cva", "tv", "cn"] // Обнаружение утилитных классов Tailwind для конкретных библиотек
+    }
+  },
+  "overrides": [
+    {
+      // Конфигурация специально для файлов TypeScript
+      "files": ["**/*.ts", "**/*.tsx", "**/*.mts"], // Применить эти правила только к файлам TypeScript
+      "plugins": [
+        "@typescript-eslint", // Правила линтинга для TypeScript
+        "unused-imports", // Плагин для автоматического удаления неиспользуемых импортов
+        "tailwindcss" // Линтинг Tailwind CSS
+      ],
+      "extends": [
+        "plugin:tailwindcss/recommended", // Рекомендуемые правила линтинга Tailwind CSS
+        "airbnb", // Полный стиль-гид Airbnb (JS + React)
+        "airbnb-typescript", // Стиль-гид Airbnb для TypeScript
+        "next/core-web-vitals", // Плагин ядра веб-показателей Next.js
+        "plugin:prettier/recommended" // Интеграция Prettier с ESLint
+      ],
+      "parser": "@typescript-eslint/parser", // Использует парсер TypeScript для ESLint
+      "parserOptions": {
+        "project": "./tsconfig.json" // Гарантирует, что TypeScript линтируется согласно tsconfig.json проекта
+      },
+      "rules": {
+        "no-var": "error", // запрещает использовать var
+        "semi": ["error", "never"], // убирает точки с запятой
+        "quotes": ["error", "single"], // устанавливает одинарные кавычки
+        "eol-last": ["error", "always"], //  устанавливает требование по добавлению пустой строки в конце файла
+        "arrow-body-style": ["warn", "as-needed"], // предупреждает о том что можно убрать return в стрелочной функции
+        "jsx-quotes": ["warn", "prefer-single"], // предупреждение о использовании двойных кавычек в JSX
+        "no-extra-semi": "off", // отключение правила о лишних точках с запятой
+        "no-case-declarations": "off", // отключение правила о объявлениях с использованием регистра
+        "no-restricted-imports": "off", // отключение правила о ограничении импорта
+        "import/no-unresolved": "off", // отключение правила о неопределенных импортах
+        "react/jsx-uses-vars": "error", // ошибка при использовании переменных в JSX
+        "react/no-unescaped-entities": "off", // отключение правила о неэскапированных сущностях в JSX
+        "react/jsx-filename-extension": [
+          2,
+          {
+            "extensions": [".jsx", ".tsx"] // ограничение файловых расширений для JSX
+          }
+        ],
+        "react/prop-types": "off", // отключение правила о типах свойств в React
+        "no-irregular-whitespace": "off", // отключение правила о нерегулярном пробеле
+        "no-console": [
+          "error",
+          {
+            "allow": ["warn", "error"] // разрешение использования консоли для warn и error
+          }
+        ],
+        "no-restricted-exports": "off", // отключение правила о ограничении экспорта
+        "react/react-in-jsx-scope": "off", // отключение правила о React в JSX
+        "@typescript-eslint/ban-types": "off", // отключение правила о запрещенных типах в TypeScript
+        "@typescript-eslint/no-unused-vars": [
+          "error",
+          {
+            "args": "none" // разрешение использования переменных для аргументов
+          }
+        ],
+        "@typescript-eslint/no-empty-object-type": "off",
+        "@typescript-eslint/no-throw-literal": "off",
+        "@typescript-eslint/lines-between-class-members": "off",
+        "@typescript-eslint/no-explicit-any": "warn",
+        "@typescript-eslint/no-var-requires": "off", // отключение правила о неопределенных переменных в TypeScript
+        "@typescript-eslint/ban-ts-comment": "off", // отключение правила о запрещенных комментариях в TypeScript
+        "max-params": ["error", 3], // ошибка при более чем 3 аргументах
+        "no-restricted-globals": "off", // отключение правила о ограничении глобальных переменных
+        "no-async-promise-executor": "off", // ошибка при использовании асинхронных функциях
+        "@typescript-eslint/no-unused-expressions": "off", // отключение правила о неиспользованных выражениях в TypeScript
+        "@typescript-eslint/default-param-last": "off", // отключение правила о последнем параметре по умолчанию в TypeScript
+        "react-hooks/rules-of-hooks": "error", // ошибка при неправильном использовании React Hooks
+        "no-unsafe-optional-chaining": "off", // отключение правила о не безопасном optional chaining
+        "react/display-name": "off", // отключение правила о отображаемом имени в React
+        "prettier/prettier": [
+          "error",
+          {
+            "singleQuote": true, // Использовать одинарные кавычки для файлов TypeScript
+            "endOfLine": "auto", // Поддерживать однородное поведение конца строки в различных средах
+            "semi": false, // Пропустить точки с запятой в конце выражений
+            "trailingComma": "es5" // Включить завершающие запятые там, где они допустимы в ES5
+          }
+        ], // Предотвратить конфликты между правилами Prettier и Airbnb ESLint
+        "tailwindcss/no-custom-classname": ["off"], // Разрешить пользовательские имена классов (не ограничивать Tailwind)
+        "import/no-extraneous-dependencies": "warn", // Предупредить о лишних зависимостях в файлах TypeScript
+        "no-param-reassign": "off", // Разрешить повторное присвоение параметров
+        "consistent-return": "off", // Отключить требование последовательного возврата
+        "no-empty-pattern": "off", // Разрешить пустые деструктивные шаблоны
+        "no-use-before-define": "off", // Отключить "использовать до определения" для всех переменных и функций
+        "no-shadow": "off", // Отключить правило затенения переменных
+        "@typescript-eslint/no-shadow": "off", // Отключить правило затенения переменных для TypeScript
+        "@typescript-eslint/no-use-before-define": "off", // Отключить "использовать до определения" для TypeScript
+        "react/jsx-no-constructed-context-values": "off", // Разрешить созданные контекстные значения в React
+        "import/extensions": "off", // Отключить требование расширений импорта (TypeScript обрабатывает это)
+        "react/function-component-definition": "off", // Разрешить различные способы определения функциональных компонентов
+        "react/destructuring-assignment": "off", // Отключить обязательное деструктурирование в компонентах React
+        "react/require-default-props": "off", // Разрешить неопределенным props быть undefined
+        "react/jsx-props-no-spreading": "off", // Разрешить распространение props в JSX (например, в _app.tsx или react-hook-form)
+        "react/no-unstable-nested-components": "off", // Разрешить ненадежные вложенные компоненты (необходимо для библиотеки i18n)
+        "@typescript-eslint/comma-dangle": "off", // Отключить правило ESLint по запятой в конце строки для избежания конфликта с Prettier
+        "no-restricted-syntax": [
+          "error",
+          "WithStatement" // Запретить оператор `with`
+        ], // Переопределить конфигурацию Airbnb для ограничения определенного синтаксиса
+        "import/prefer-default-export": "off", // Разрешить именованные экспорты без предпочтения дефолтных экспортов
+        "unused-imports/no-unused-imports": "error", // Автоматически удалять неиспользуемые импорты
+        "no-unused-vars": "off", // Отключить правило неиспользуемых переменных (охватывается плагином unused-imports)
+        "@typescript-eslint/naming-convention": [
+          "error",
+          {
+            "selector": "variable",
+            "format": ["camelCase", "UPPER_CASE", "PascalCase"]
+          },
+          {
+            "selector": "interface",
+            "format": ["PascalCase"]
+          },
+          {
+            "selector": "enum",
+            "format": ["UPPER_CASE"],
+            "leadingUnderscore": "forbid", // Не допускает ведущие подчеркивания
+            "suffix": ["_ENUM"]
+          },
+          {
+            "selector": "enumMember",
+            "format": ["UPPER_CASE"],
+            "leadingUnderscore": "allow" // Позволяет ведущие подчеркивания для членов перечисления
+          }
+        ], // Правило именования
+        "unused-imports/no-unused-vars": [
+          "warn",
+          {
+            "vars": "all", // Предупреждать о всех неиспользуемых переменных
+            "varsIgnorePattern": "^_", // Игнорировать переменные, начинающиеся с подчеркивания
+            "args": "after-used", // Предупреждать только о неиспользуемых аргументах, если они появляются после использованных
+            "argsIgnorePattern": "^_" // Игнорировать аргументы, начинающиеся с подчеркивания
+          }
+        ]
+      }
+    }
+  ]
 }
