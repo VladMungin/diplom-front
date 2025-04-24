@@ -1,1 +1,1 @@
-export { IndexPage as default } from '@/src/app/page'
+export { IndexPage as default } from '@/pages/index'
